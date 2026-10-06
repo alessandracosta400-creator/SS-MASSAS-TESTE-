@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SS Massas — Sabor que combina com você.</title>
+<style>
+:root{--cream:#f8f0df;--navy:#13233d;--gold:#b08a43;--white:#fffdf8;--muted:#746b5c;--line:#e4d7bf;--shadow:0 8px 24px rgba(19,35,61,.10)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--navy);font-family:Arial,sans-serif}
+button{font:inherit}.wrap{max-width:760px;margin:auto;padding:0 16px}
+header{background:var(--navy);color:#fff;padding:30px 16px 22px;text-align:center;border-bottom:4px solid var(--gold)}
+.logo{font-family:Georgia,serif;font-size:38px;letter-spacing:3px}.slogan{color:#ead9ad;margin-top:6px;font-family:Georgia,serif}
+nav{position:sticky;top:0;z-index:10;background:var(--white);border-bottom:1px solid var(--line);padding:10px;overflow:auto;white-space:nowrap}
+nav button{background:var(--navy);color:white;border:0;border-radius:20px;padding:9px 13px;margin-right:6px;font-size:13px}
+section{padding:25px 0 5px}.section-title{font:26px Georgia,serif;margin:0 0 14px}.section-sub{color:var(--muted);font-size:14px;margin:-7px 0 15px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:15px;margin:12px 0;box-shadow:var(--shadow)}
+.img{height:180px;border-radius:12px;background:#f4eee2;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--navy);font-weight:bold;margin-bottom:13px;overflow:hidden}.img img{width:100%;height:100%;object-fit:contain;display:block}
+.img .food{font-size:48px;margin-bottom:5px}.img small{font-size:10px;letter-spacing:1px;color:#776b58}
+.name{font:bold 18px Georgia,serif;margin-bottom:7px}.desc{font-size:13px;color:var(--muted);line-height:1.45;margin-bottom:12px}
+.row{display:flex;gap:9px;flex-wrap:wrap}.option{flex:1;min-width:120px}.option label{display:block;font-size:12px;font-weight:bold;margin:10px 0 5px}
+select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--navy)}
+.price{font-weight:bold;color:var(--gold);font-size:18px}.sizes{display:flex;gap:8px;margin:10px 0}.size{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;text-align:center;cursor:pointer}.size.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.add{width:100%;border:0;background:var(--navy);color:#fff;padding:12px;border-radius:10px;font-weight:bold;margin-top:11px;cursor:pointer}.add:active{transform:scale(.99)}
+.add.gold{background:var(--gold)}.price-line{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+#cart{position:fixed;right:14px;bottom:14px;z-index:20;background:var(--gold);color:#fff;border:0;border-radius:50px;padding:15px 19px;font-weight:bold;box-shadow:0 8px 25px #0003}
+#cartCount{background:#fff;color:var(--navy);border-radius:20px;padding:2px 7px;margin-left:5px}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:30;align-items:flex-end}.modal.open{display:flex}
+.sheet{background:var(--white);width:100%;max-height:88vh;border-radius:22px 22px 0 0;padding:20px;overflow:auto}.sheet h2{font:26px Georgia,serif;margin:0 0 15px}
+.cartitem{border-bottom:1px solid var(--line);padding:12px 0}.carttop{display:flex;justify-content:space-between;gap:10px}.cartname{font-weight:bold}.qty{display:flex;align-items:center;gap:8px;margin-top:8px}.qty button{border:1px solid var(--line);background:#fff;border-radius:8px;width:32px;height:30px}.remove{margin-left:auto;color:#a33;border:0;background:none}
+.total{display:flex;justify-content:space-between;font-size:20px;font-weight:bold;padding:16px 0}.checkout{width:100%;padding:14px;border:0;border-radius:11px;background:#198754;color:#fff;font-weight:bold;font-size:16px}.clear{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;background:#fff;margin-top:8px;color:#8a3b3b}.payment-box{margin-top:16px;padding:16px;border-radius:14px;background:#f7f2e8;text-align:left;border:1px solid #e8dcc5}.payment-title{font-weight:700;font-size:17px;margin-bottom:12px}.payment-item{margin:10px 0;line-height:1.45}.payment-choice{display:flex;align-items:center;gap:10px;margin:9px 0;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);cursor:pointer;-webkit-tap-highlight-color:transparent}.payment-choice input{width:20px;height:20px;min-width:20px;margin:0;accent-color:var(--navy);cursor:pointer}.payment-choice.selected{border-color:var(--navy);box-shadow:0 0 0 1px var(--navy) inset}.payment-choice .payment-label{flex:1;font-weight:700}.pix-key{font-weight:700;letter-spacing:.3px}.copy-pix{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:9px;padding:11px;border:1px solid var(--gold);border-radius:10px;background:#fff;color:var(--navy);font-weight:700;cursor:pointer}.copy-pix.copied{background:#198754;color:#fff;border-color:#198754}.payment-note{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.4}.close{float:right;border:0;background:none;font-size:25px;color:var(--navy)}
+footer{text-align:center;padding:35px 15px 100px;color:var(--muted);font-size:13px}
+@media(min-width:700px){.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid .card{margin:0}.img{height:190px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="logo">SS MASSAS</div><div class="slogan">Sabor que combina com você.</div></div></header>
+<nav>
+<div class="wrap">
+<button onclick="go('montar')">Monte sua Marmita</button><button onclick="go('prontos')">Já Montadas</button><button onclick="go('panquecas')">Panquecas</button><button onclick="go('lasanhas')">Lasanhas</button><button onclick="go('adicionais')">Adicionais</button><button onclick="go('bebidas')">Bebidas</button>
+</div></nav>
+<main class="wrap">
+
+<section id="montar"><h2 class="section-title">Monte sua Marmita</h2><p class="section-sub">Escolha o tamanho, a massa, o molho, a proteína e 1 adicional incluso no valor.</p>
+<div class="card">
+<div class="img"><img src="assets/monte-marmita.png" alt="Foto meramente ilustrativa de uma marmita de massa"></div>
+<div class="name">Sua marmita do seu jeito</div>
+<div class="row">
+<div class="option"><label>Tamanho</label><select id="mSize"><option value="500|23">500 ml — R$ 23,00</option><option value="700|28">700 ml — R$ 28,00</option></select></div>
+<div class="option"><label>Massa</label><select id="mMass"><option>Espaguete</option><option>Penne</option><option>Parafuso</option><option>Caracolli</option><option>Nhoque</option></select></div>
+<div class="option"><label>Molho</label><select id="mSauce"><option>Sugo</option><option>Bolonhesa</option><option>Molho Branco</option><option>Cheddar</option></select></div>
+<div class="option"><label>Proteína</label><select id="mProt"><option>Almôndegas</option><option>Frango em tiras</option><option>Frango desfiado</option><option>Calabresa</option></select></div>
+<div class="option"><label>1 adicional incluso</label><select id="mExtra"><option value="" disabled selected>Escolha 1 adicional</option><option>Presunto</option><option>Queijo Parmesão</option><option>Bacon</option><option>Mussarela</option><option>Brócolis</option><option>Molho extra</option><option>Azeitona</option></select></div>
+</div>
+<button class="add" onclick="addMarmita()">Adicionar à sacola</button>
+</div></section>
+
+<section id="prontos"><h2 class="section-title">Opções Já Montadas</h2><p class="section-sub">Todas disponíveis em 500 ml ou 700 ml.</p><div class="grid" id="readyGrid"></div></section>
+
+<section id="panquecas"><h2 class="section-title">Panquecas</h2><p class="section-sub">Todas disponíveis em 500 ml ou 700 ml, com molho e mussarela.</p><div class="grid" id="pancakeGrid"></div></section>
+
+<section id="lasanhas"><h2 class="section-title">Lasanhas Premium</h2><p class="section-sub">Todas com parmesão incluso.</p><div class="grid" id="lasagnaGrid"></div></section>
+
+<section id="adicionais"><h2 class="section-title">Adicionais</h2><div class="grid" id="extraGrid"></div></section>
+
+<section id="bebidas"><h2 class="section-title">Bebidas</h2><div class="grid" id="drinkGrid"></div></section>
+</main>
+<footer>SS Massas · Sabor que combina com você.</footer>
+
+<button id="cart" onclick="openCart()">🛒 Sacola <span id="cartCount">0</span></button>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeCart()"><div class="sheet">
+<button class="close" onclick="closeCart()">×</button><h2>Seu pedido</h2><div id="cartList"></div>
+<div style="margin:18px 0;padding:16px;border-radius:14px;background:#f7f2e8;text-align:left">
+<label for="deliveryArea" style="display:block;font-weight:700;margin-bottom:7px">🛵 Área de entrega</label>
+<select id="deliveryArea" onchange="renderCart()" style="width:100%;padding:12px;border-radius:10px;border:1px solid #d8c9aa;font-size:16px;background:#fff">
+<option value="">Selecione sua área</option><option value="Vargem Grande|0">Vargem Grande — GRÁTIS (por tempo limitado)</option><option value="Silveira|3">Silveira — R$ 3,00</option><option value="Colônia|4">Colônia — R$ 4,00</option><option value="Parelheiros|6">Parelheiros — R$ 6,00</option>
+</select>
+<label for="deliveryAddress" style="display:block;font-weight:700;margin:14px 0 7px">📍 Endereço de entrega</label>
+<textarea id="deliveryAddress" rows="3" placeholder="Rua, número, complemento e referência" style="width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #d8c9aa;font-size:16px;resize:vertical"></textarea>
+
+<div class="payment-box">
+<div class="payment-title">💳 Formas de Pagamento</div>
+<label class="payment-choice" onclick="selectPayment(this.querySelector('input'))"><input type="radio" name="paymentMethod" value="PIX" onchange="selectPayment(this)"><span class="payment-label">📱 PIX</span></label>
+<div class="payment-item">Chave PIX (CNPJ): <span class="pix-key">59.566.881/0001-55</span>
+<button type="button" class="copy-pix" id="copyPix" onclick="copyPixKey()">🔘 Copiar chave PIX</button></div>
+<div class="payment-note">Depois de copiar, abra o aplicativo do seu banco e faça o pagamento.</div>
+<div class="payment-note">📎 Após realizar o PIX, envie o comprovante pelo WhatsApp para confirmarmos seu pedido.</div>
+<label class="payment-choice" onclick="selectPayment(this.querySelector('input'))"><input type="radio" name="paymentMethod" value="Dinheiro" onchange="selectPayment(this)"><span class="payment-label">💵 Dinheiro</span></label>
+<label class="payment-choice" onclick="selectPayment(this.querySelector('input'))"><input type="radio" name="paymentMethod" value="Cartão por aproximação — Crédito ou Débito" onchange="selectPayment(this)"><span class="payment-label">📲 Cartão por aproximação — Crédito ou Débito</span></label>
+</div>
+</div>
+<div class="total"><span>Total</span><span id="total">R$ 0,00</span></div>
+<button class="checkout" onclick="checkout()">Finalizar pelo WhatsApp</button>
+<button class="clear" style="color:#174b6b;border-color:#d8c9aa" onclick="printTestOrder()">🖨️ Testar impressão neste celular</button>
+<button class="clear" onclick="clearCart()">Limpar sacola</button>
+</div></div>
+
+<script>
+const ready=[
+['Espaguete à Bolonhesa','Espaguete com molho bolonhesa.',23,28,'🍝','assets/espaguete-bolonhesa.png'],
+['Mac & Cheese com Bacon','Massa cremosa com cheddar e bacon.',23,28,'🧀','assets/mac-cheese-bacon.png'],
+['Penne com Calabresa Acebolada','Penne com calabresa e cebola.',23,28,'🍝','assets/penne-calabresa.png'],
+['Parafuso ao Molho Branco com Brócolis','Parafuso ao molho branco com brócolis.',23,28,'🥦','assets/parafuso-brocolis.png'],
+['Nhoque à Bolonhesa','Nhoque com molho bolonhesa.',23,28,'🍝','assets/nhoque-bolonhesa.png']
+];
+const pancakes=[
+['Panqueca de Carne com Molho e Mussarela','Panqueca de carne com molho e mussarela.',23,28,'🥞','assets/panquecas-carne.png'],
+['Panqueca de Frango com Molho e Mussarela','Panqueca de frango com molho e mussarela.',23,28,'🥞','assets/panqueca-frango.png'],
+['Panqueca de Presunto e Queijo com Molho e Mussarela','Panqueca de presunto e queijo com molho e mussarela.',23,28,'🥞','assets/panqueca-presunto-queijo.png']
+];
+const las=[
+['Lasanha de Queijo',28,38,'🧀','assets/lasanha-de-queijo.png'],['Lasanha de Presunto e Queijo',28,38,'🧀','assets/lasanha-de-presunto-e-queijo.png'],
+['Lasanha Bolonhesa Tradicional',32,42,'🍝','assets/lasanha-bolonhesa-tradicional.png'],['Lasanha de Calabresa com Queijo',34,44,'🌶️','assets/lasanha-calabresa-queijo.png'],['Lasanha de Frango com Catupiry',34,44,'🍗','assets/lasanha-frango-catupiry.png'],
+];
+const extras=[['Presunto',3,'assets/presunto.png'],['Queijo Parmesão',3,'assets/queijo-parmesao.png'],['Bacon',4,'assets/bacon.png'],['Mussarela',3,'assets/mussarela.png'],['Brócolis',2,'assets/brocolis.png'],['Molho extra',2,'assets/molho-extra.png'],['Azeitona',2,'assets/azeitona.png']];
+const drinks=[['Coca-Cola Mini 200 ml',3.5,'🥤','assets/coca-mini.png'],['Guaraná Antarctica Mini 200 ml',3.5,'🥤','assets/guarana-mini.png'],['Coca-Cola 350 ml',5,'🥤','assets/coca-350.png'],['Guaraná Antarctica 350 ml',5,'🥤','assets/guarana-350.png'],['Dolly 350 ml',4,'🥤','assets/dolly-350.png']];
+let cart=[];
+let currentOrderNumber=null;
+
+function money(n){return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+function img(emoji,src){return src?`<div class="img"><img src="${src}" alt="Foto meramente ilustrativa"></div>`:`<div class="img"><div class="food">${emoji}</div><small>IMAGEM ILUSTRATIVA — será substituída pela foto real</small></div>`}
+function build(){
+document.getElementById('readyGrid').innerHTML=ready.map((x,i)=>`<div class="card">${img(x[4],x[5])}<div class="name">${x[0]}</div><div class="desc">${x[1]}</div><div class="sizes"><button class="size active" data-group="r${i}" onclick="pick(this)">500 ml — ${money(x[2])}</button><button class="size" data-group="r${i}" onclick="pick(this)">700 ml — ${money(x[3])}</button></div><button class="add" onclick="addReady(${i},this)">Adicionar à sacola</button></div>`).join('');
+document.getElementById('pancakeGrid').innerHTML=pancakes.map((x,i)=>`<div class="card">${img(x[4],x[5])}<div class="name">${x[0]}</div><div class="desc">${x[1]}</div><div class="sizes"><button class="size active" data-group="p${i}" onclick="pick(this)">500 ml — ${money(x[2])}</button><button class="size" data-group="p${i}" onclick="pick(this)">700 ml — ${money(x[3])}</button></div><button class="add" onclick="addPancake(${i},this)">Adicionar à sacola</button></div>`).join('');
+document.getElementById('lasagnaGrid').innerHTML=las.map((x,i)=>`<div class="card">${img(x[3],x[4])}<div class="name">${x[0]}</div><div class="desc">Lasanha premium com parmesão incluso.</div><div class="sizes"><button class="size active" data-group="l${i}" onclick="pick(this)">500 ml — ${money(x[1])}</button><button class="size" data-group="l${i}" onclick="pick(this)">700 ml — ${money(x[2])}</button></div><button class="add" onclick="addLas(${i},this)">Adicionar à sacola</button></div>`).join('');
+document.getElementById('extraGrid').innerHTML=extras.map((x,i)=>`<div class="card">${img('➕',x[2])}<div class="name">${x[0]}</div><div class="price-line"><span>Adicional</span><span class="price">${money(x[1])}</span></div><button class="add gold" onclick="addSimple('${x[0]}',${x[1]})">Adicionar à sacola</button></div>`).join('');
+document.getElementById('drinkGrid').innerHTML=drinks.map(x=>`<div class="card">${img(x[2],x[3])}<div class="name">${x[0]}</div><div class="price-line"><span>Bebida</span><span class="price">${money(x[1])}</span></div><button class="add gold" onclick="addSimple('${x[0]}',${x[1]})">Adicionar à sacola</button></div>`).join('');
+}
+function pick(b){document.querySelectorAll(`[data-group="${b.dataset.group}"]`).forEach(x=>x.classList.remove('active'));b.classList.add('active')}
+function addMarmita(){let [ml,p]=document.getElementById('mSize').value.split('|');let mass=document.getElementById('mMass').value;let sauce=document.getElementById('mSauce').value;let prot=document.getElementById('mProt').value;let extra=document.getElementById('mExtra').value;if(!extra){alert('Escolha 1 adicional incluso no valor da marmita.');return}let name=`Marmita ${ml} ml — ${mass} + ${sauce} + ${prot} + Adicional incluso: ${extra}`;add(name,+p)}
+function addReady(i,b){let box=b.parentElement, s=[...box.querySelectorAll('.size')].find(x=>x.classList.contains('active'));let ml=s.textContent.startsWith('500')?500:700;add(`Marmita ${ml} ml — ${ready[i][0]}`,ml===500?ready[i][2]:ready[i][3])}
+function addPancake(i,b){let box=b.parentElement,s=[...box.querySelectorAll('.size')].find(x=>x.classList.contains('active'));let ml=s.textContent.startsWith('500')?500:700;add(`Panqueca ${ml} ml — ${pancakes[i][0]}`,ml===500?pancakes[i][2]:pancakes[i][3])}
+function addLas(i,b){let box=b.parentElement,s=[...box.querySelectorAll('.size')].find(x=>x.classList.contains('active'));let ml=s.textContent.startsWith('500')?500:700;add(`${las[i][0]} — ${ml} ml`,ml===500?las[i][1]:las[i][2])}
+function addSimple(n,p){add(n,p)}
+function add(name,price){let item=cart.find(x=>x.name===name);if(item)item.qty++;else cart.push({name,price,qty:1});update();alert('Item adicionado à sacola!')}
+function update(){let count=cart.reduce((s,x)=>s+x.qty,0);document.getElementById('cartCount').textContent=count;renderCart()}
+function renderCart(){let el=document.getElementById('cartList');if(!cart.length){el.innerHTML='<p style="color:#746b5c">Sua sacola está vazia.</p>';document.getElementById('total').textContent=money(0);return}el.innerHTML=cart.map((x,i)=>`<div class="cartitem"><div class="carttop"><div><div class="cartname">${x.name}</div><small>${money(x.price)} cada</small></div><b>${money(x.price*x.qty)}</b></div><div class="qty"><button onclick="change(${i},-1)">−</button><b>${x.qty}</b><button onclick="change(${i},1)">+</button><button class="remove" onclick="removeItem(${i})">Remover</button></div></div>`).join('');let base=cart.reduce((s,x)=>s+x.price*x.qty,0);let sel=document.getElementById('deliveryArea');let fee=sel&&sel.value?Number(sel.value.split('|')[1]):0;document.getElementById('total').textContent=money(base+fee)}
+function change(i,n){cart[i].qty+=n;if(cart[i].qty<=0)cart.splice(i,1);update()}
+function removeItem(i){cart.splice(i,1);update()}
+function clearCart(){cart=[];currentOrderNumber=null;update()}
+async function copyPixKey(){
+const key='59566881000155';
+const btn=document.getElementById('copyPix');
+try{await navigator.clipboard.writeText(key)}catch(e){const ta=document.createElement('textarea');ta.value=key;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');ta.remove()}
+btn.textContent='✓ Chave PIX copiada!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='🔘 Copiar chave PIX';btn.classList.remove('copied')},2200);
+}
+function selectPayment(input){
+if(!input)return;
+document.querySelectorAll('.payment-choice').forEach(x=>x.classList.remove('selected'));
+input.checked=true;
+input.closest('.payment-choice').classList.add('selected');
+}
+function getPaymentMethod(){
+const chosen=document.querySelector('input[name="paymentMethod"]:checked');
+return chosen?chosen.value:'';
+}
+function openCart(){renderCart();document.getElementById('modal').classList.add('open')}
+function closeCart(){document.getElementById('modal').classList.remove('open')}
+function getOrderNumber(){
+  if(currentOrderNumber) return currentOrderNumber;
+  let n=Number(localStorage.getItem('ssMassasOrderNumber')||'0')+1;
+  localStorage.setItem('ssMassasOrderNumber',String(n));
+  currentOrderNumber=String(n).padStart(3,'0');
+  return currentOrderNumber;
+}
+function orderData(){
+  let sel=document.getElementById('deliveryArea');
+  let address=document.getElementById('deliveryAddress').value.trim();
+  let payment=getPaymentMethod();
+  if(!cart.length) throw new Error('Sua sacola está vazia.');
+  if(!sel || !sel.value) throw new Error('Selecione sua área de entrega.');
+  if(!address) throw new Error('Informe o endereço de entrega.');
+  if(!payment) throw new Error('Selecione a forma de pagamento.');
+  let [area,feeText]=sel.value.split('|');
+  let fee=Number(feeText);
+  let subtotal=cart.reduce((s,x)=>s+x.price*x.qty,0);
+  return {number:getOrderNumber(),area,address,payment,fee,subtotal,total:subtotal+fee,items:cart.map(x=>({name:x.name,qty:x.qty,unit:x.price,line:x.price*x.qty}))};
+}
+function buildReceipt(o){
+  const brl=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const content=[
+    {type:'text',text:'SS MASSAS',align:'center',bold:true,size:'large'},
+    {type:'text',text:'Sabor que combina com você.',align:'center'},
+    {type:'divider'},
+    {type:'text',text:'PEDIDO Nº '+o.number,align:'center',bold:true,size:'large'},
+    {type:'divider'}
+  ];
+  o.items.forEach(x=>content.push({type:'row',left:x.qty+'x '+x.name,right:brl(x.line)}));
+  content.push({type:'divider'});
+  content.push({type:'row',left:'Subtotal',right:brl(o.subtotal)});
+  content.push({type:'row',left:'Entrega '+o.area,right:o.fee===0?'GRATIS':brl(o.fee)});
+  content.push({type:'row',left:'TOTAL',right:brl(o.total),bold:true});
+  content.push({type:'divider'});
+  content.push({type:'text',text:'ENDEREÇO',bold:true});
+  content.push({type:'text',text:o.address});
+  content.push({type:'text',text:'Pagamento: '+o.payment});
+  content.push({type:'feed',lines:3});
+  return {cut:true,content};
+}
+async function sendToCleanter(o){
+  const res=await fetch('http://localhost:9100/print',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(buildReceipt(o))});
+  let data={}; try{data=await res.json()}catch(e){}
+  if(!res.ok) throw new Error(data.error||data.message||'Cleanter não conseguiu imprimir.');
+  return data;
+}
+async function printTestOrder(){
+  let o;
+  try{o=orderData()}catch(e){alert(e.message);return}
+  try{
+    await sendToCleanter(o);
+    alert('Pedido Nº '+o.number+' enviado para a impressora!');
+  }catch(e){
+    alert('Não foi possível imprimir. Verifique se o Cleanter está aberto e a MY-7779 conectada.\n\nDetalhe: '+e.message);
+  }
+}
+function checkout(){
+  let o;
+  try{o=orderData()}catch(e){alert(e.message);return}
+  let msg='Olá! Gostaria de fazer um pedido na SS Massas:%0A%0APedido Nº '+encodeURIComponent(o.number)+'%0A%0A'+o.items.map(x=>`• ${x.qty}x ${x.name} — ${money(x.line)}`).join('%0A')+`%0A%0ASubtotal: ${money(o.subtotal)}%0ATaxa de entrega (${encodeURIComponent(o.area)}): ${o.fee===0?'GRÁTIS':money(o.fee)}%0AEndereço: ${encodeURIComponent(o.address)}%0AForma de pagamento: ${encodeURIComponent(o.payment)}%0A%0ATotal: ${money(o.total)}`;
+  window.location.href='https://wa.me/5511952618661?text='+msg;
+}
+function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+build();update();
+</script>
+</body></html>
